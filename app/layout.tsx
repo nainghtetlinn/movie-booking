@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
+import AuthProvider from '@/providers/authProvider'
 import ThemeProvider from '@/providers/themeProvider'
 import Navbar from './Navbar'
 
@@ -17,10 +18,12 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        <ThemeProvider>
-          <Navbar />
-          <main>{children}</main>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <Navbar />
+            <main>{children}</main>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   )
