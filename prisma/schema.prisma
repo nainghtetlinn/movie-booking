@@ -60,7 +60,7 @@ model VerificationToken {
 }
 
 enum Role {
-  SUPERADMIN
+  SUPER_ADMIN
   ADMIN
   USER
 }
