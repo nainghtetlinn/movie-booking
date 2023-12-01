@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 import ThemeProvider from '@/providers/themeProvider'
+import Navbar from './Navbar'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +17,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Navbar />
+          <main>{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   )
