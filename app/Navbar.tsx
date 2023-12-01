@@ -2,6 +2,7 @@
 
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
+import LogoutIcon from '@mui/icons-material/Logout'
 import {
   AppBar,
   Toolbar,
@@ -14,10 +15,19 @@ import {
   ListItem,
   ListItemText,
   ListItemButton,
+  ListItemIcon,
+  ListItemAvatar,
   Drawer,
+  Skeleton,
+  Tooltip,
+  Avatar,
+  Menu,
+  MenuItem,
 } from '@mui/material'
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
 import { useRouter, usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { useSession, signOut } from 'next-auth/react'
 
 const Navbar = () => {
   return (
@@ -41,6 +51,8 @@ const Navbar = () => {
               </Typography>
               <LaptopNavLinks />
             </Stack>
+
+            <AuthStatus />
           </Stack>
         </Container>
       </Toolbar>
@@ -138,5 +150,84 @@ const navlinks = [
   { label: 'Booking', href: '/booking' },
   { label: 'Contact', href: '/contact' },
 ]
+
+const AuthStatus = () => {
+  const { status, data } = useSession()
+  const router = useRouter()
+
+  if (status === 'loading')
+    return <Skeleton variant='circular' width={40} height={40} />
+
+  if (status === 'unauthenticated')
+    return (
+      <Stack direction='row' gap={1}>
+        <Button
+          size='small'
+          variant='text'
+          color='inherit'
+          sx={{ textTransform: 'capitalize' }}
+          onClick={() => router.push('/login')}
+        >
+          Login
+        </Button>
+        <Button
+          size='small'
+          variant='text'
+          color='inherit'
+          sx={{ textTransform: 'capitalize' }}
+          onClick={() => router.push('/register')}
+        >
+          Register
+        </Button>
+      </Stack>
+    )
+
+  return (
+    <PopupState variant='popover'>
+      {popupState => (
+        <>
+          <Tooltip title='Account'>
+            <IconButton {...bindTrigger(popupState)}>
+              <Avatar
+                className='w-8 h-8'
+                src={data?.user.image || ''}
+                alt={data?.user.name || ''}
+              >
+                {data?.user.name ? data.user.name[0].toUpperCase() : '?'}
+              </Avatar>
+            </IconButton>
+          </Tooltip>
+          <Menu
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            {...bindMenu(popupState)}
+          >
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar
+                  className='w-8 h-8'
+                  src={data?.user.image || ''}
+                  alt={data?.user.name || ''}
+                >
+                  {data?.user.name ? data.user.name[0].toUpperCase() : '?'}
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={data?.user.email}
+                secondary={data?.user.name}
+              />
+            </ListItem>
+            <MenuItem onClick={() => signOut()}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+          </Menu>
+        </>
+      )}
+    </PopupState>
+  )
+}
 
 export default Navbar
