@@ -7,6 +7,13 @@ import {
   Theme,
 } from '@mui/material'
 import { PropsWithChildren } from 'react'
+import { Roboto } from 'next/font/google'
+
+const roboto = Roboto({
+  weight: ['300', '400', '500', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+})
 
 const theme: Theme = createTheme({
   palette: {
@@ -17,6 +24,9 @@ const theme: Theme = createTheme({
     secondary: {
       main: '#bd1c1c',
     },
+  },
+  typography: {
+    fontFamily: roboto.style.fontFamily,
   },
 })
 
