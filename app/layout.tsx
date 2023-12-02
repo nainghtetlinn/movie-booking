@@ -3,6 +3,7 @@ import './globals.css'
 
 import AuthProvider from '@/providers/authProvider'
 import ThemeProvider from '@/providers/themeProvider'
+import SnackbarProvider from '@/providers/snackbarProvider'
 import Navbar from './Navbar'
 
 export const metadata: Metadata = {
@@ -20,8 +21,10 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <ThemeProvider>
-            <Navbar />
-            <main>{children}</main>
+            <SnackbarProvider>
+              <Navbar />
+              <main>{children}</main>
+            </SnackbarProvider>
           </ThemeProvider>
         </AuthProvider>
       </body>
