@@ -12,6 +12,7 @@ import {
 import axios, { isAxiosError } from 'axios'
 import { enqueueSnackbar } from 'notistack'
 import NextLink from 'next/link'
+import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -35,9 +36,20 @@ const Form = () => {
   const onSubmit = async (e: any) => {
     try {
       const { data } = await axios.post('/api/auth/register', { ...e })
-      enqueueSnackbar('Successfully registered.', { variant: 'success' })
-      router.push('/login')
-      router.refresh()
+      const res = await signIn('credentials', {
+        password: e.password,
+        email: data?.data.email,
+        redirect: false,
+      })
+
+      if (res?.ok) {
+        router.push('/')
+        router.refresh()
+      } else {
+        enqueueSnackbar(res?.error || 'Something went wrong.', {
+          variant: 'error',
+        })
+      }
     } catch (error) {
       if (isAxiosError(error)) {
         console.log(error.response?.data)
