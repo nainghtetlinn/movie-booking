@@ -30,7 +30,7 @@ export const options: AuthOptions = {
 
           if (!foundUser) return null
 
-          const match = comparePassword(
+          const match = await comparePassword(
             validation.password,
             foundUser.password!
           )
