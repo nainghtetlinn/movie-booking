@@ -28,12 +28,16 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
 import { useRouter, usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { useSession, signOut } from 'next-auth/react'
+import { Session } from 'next-auth'
 
 const Navbar = () => {
+  const { status, data } = useSession()
+  const role = data?.user.role || 'USER'
+
   return (
     <AppBar
       position='relative'
-      color='transparent'
+      color={role !== 'USER' ? 'primary' : 'transparent'}
       variant='outlined'
       elevation={0}
     >
@@ -49,10 +53,10 @@ const Navbar = () => {
               <Typography variant='h6' className='mr-2'>
                 Movie booking
               </Typography>
-              <LaptopNavLinks />
+              <LaptopNavLinks isAdmin={role !== 'USER'} />
             </Stack>
 
-            <AuthStatus />
+            <AuthStatus status={status} data={data} />
           </Stack>
         </Container>
       </Toolbar>
@@ -60,7 +64,7 @@ const Navbar = () => {
   )
 }
 
-const LaptopNavLinks = () => {
+const LaptopNavLinks = ({ isAdmin }: { isAdmin: boolean }) => {
   const router = useRouter()
   const currentRoute = usePathname()
 
@@ -82,7 +86,13 @@ const LaptopNavLinks = () => {
           key={l.label}
           size='small'
           variant={currentRoute === l.href ? 'contained' : 'text'}
-          color={currentRoute === l.href ? 'primary' : 'inherit'}
+          color={
+            currentRoute === l.href
+              ? isAdmin
+                ? 'secondary'
+                : 'primary'
+              : 'inherit'
+          }
           sx={{ textTransform: 'capitalize' }}
           onClick={() => router.push(l.href)}
         >
@@ -151,8 +161,13 @@ const navlinks = [
   { label: 'Contact', href: '/contact' },
 ]
 
-const AuthStatus = () => {
-  const { status, data } = useSession()
+const AuthStatus = ({
+  status,
+  data,
+}: {
+  status: 'loading' | 'authenticated' | 'unauthenticated'
+  data: Session | null
+}) => {
   const router = useRouter()
 
   if (status === 'loading')
