@@ -9,6 +9,7 @@ import {
   Link,
   Button,
 } from '@mui/material'
+import { enqueueSnackbar } from 'notistack'
 import NextLink from 'next/link'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -33,6 +34,7 @@ const Form = () => {
         router.push('/')
         router.refresh()
       } else {
+        enqueueSnackbar('Check your credentials', { variant: 'error' })
       }
     } catch (error) {
       console.log(error)
