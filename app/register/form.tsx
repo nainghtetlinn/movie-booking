@@ -42,7 +42,7 @@ const Form = () => {
       if (isAxiosError(error)) {
         console.log(error.response?.data)
         enqueueSnackbar(
-          error.response?.data.message || 'Something went wrong',
+          error.response?.data.message || 'Something went wrong.',
           { variant: 'error' }
         )
       }

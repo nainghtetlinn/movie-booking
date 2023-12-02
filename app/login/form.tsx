@@ -34,7 +34,9 @@ const Form = () => {
         router.push('/')
         router.refresh()
       } else {
-        enqueueSnackbar('Check your credentials', { variant: 'error' })
+        enqueueSnackbar(res?.error || 'Something went wrong.', {
+          variant: 'error',
+        })
       }
     } catch (error) {
       console.log(error)

@@ -17,31 +17,26 @@ export const options: AuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        try {
-          const userCredentials = {
-            email: credentials?.email,
-            password: credentials?.password,
-          }
-          const validation = loginUserSchema.parse(userCredentials)
-
-          const foundUser = await prisma.user.findUnique({
-            where: { email: validation.email },
-          })
-
-          if (!foundUser) return null
-
-          const match = await comparePassword(
-            validation.password,
-            foundUser.password!
-          )
-
-          if (!match) return null
-
-          return exclude(foundUser, 'password')
-        } catch (error) {
-          console.log(error)
+        const userCredentials = {
+          email: credentials?.email,
+          password: credentials?.password,
         }
-        return null
+        const validation = loginUserSchema.parse(userCredentials)
+
+        const foundUser = await prisma.user.findUnique({
+          where: { email: validation.email },
+        })
+
+        if (!foundUser) throw new Error('User not found.')
+
+        const match = await comparePassword(
+          validation.password,
+          foundUser.password!
+        )
+
+        if (!match) throw new Error('Invalid credentials.')
+
+        return exclude(foundUser, 'password')
       },
     }),
   ],
