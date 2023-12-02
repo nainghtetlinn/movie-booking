@@ -28,6 +28,15 @@ const theme: Theme = createTheme({
   typography: {
     fontFamily: roboto.style.fontFamily,
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'capitalize',
+        },
+      },
+    },
+  },
 })
 
 const ThemeProvider = ({ children }: PropsWithChildren) => {
