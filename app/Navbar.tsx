@@ -36,13 +36,14 @@ const Navbar = () => {
   const currentRoute = usePathname()
 
   const role = data?.user.role || 'USER'
+  const isAdmin = role !== 'USER'
 
-  if (role !== 'USER' && currentRoute === '/dashboard') return null
+  if (currentRoute === '/dashboard') return null
 
   return (
     <AppBar
       position='relative'
-      color={role !== 'USER' ? 'primary' : 'transparent'}
+      color={isAdmin ? 'primary' : 'transparent'}
       variant='outlined'
       elevation={0}
       sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}
@@ -59,13 +60,10 @@ const Navbar = () => {
               <Typography variant='h6' className='mr-2'>
                 Movie booking
               </Typography>
-              <LaptopNavLinks
-                isAdmin={role !== 'USER'}
-                currentRoute={currentRoute}
-              />
+              <LaptopNavLinks isAdmin={isAdmin} currentRoute={currentRoute} />
             </Stack>
 
-            <AuthStatus status={status} data={data} isAdmin={role !== 'USER'} />
+            <AuthStatus status={status} data={data} isAdmin={isAdmin} />
           </Stack>
         </Container>
       </Toolbar>
