@@ -64,3 +64,47 @@ enum Role {
   ADMIN
   USER
 }
+
+enum SeatStatus {
+  PURCHASED
+  AVAILABLE
+}
+
+model Seat {
+  id       String      @id @default(auto()) @map("_id") @db.ObjectId
+  class    String?
+  price    Int?
+  row      String?
+  number   Int?
+  status   SeatStatus?
+  screenId String      @db.ObjectId
+}
+
+model Show {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  start_time DateTime?
+  end_time   DateTime?
+  screenId   String?   @db.ObjectId
+  movieId    String?   @db.ObjectId
+  movie      Movie?    @relation(fields: [movieId], references: [id])
+}
+
+model Movie {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  name         String?
+  description  String?
+  director     String?
+  actors       String[]
+  duration_min Int?
+  release_date DateTime?
+  genreIds     String[]  @db.ObjectId
+  genres       Genre[]   @relation(fields: [genreIds], references: [id])
+  show         Show[]
+}
+
+model Genre {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  name     String?
+  movieIds String[] @db.ObjectId
+  movies   Movie[]  @relation(fields: [movieIds], references: [id])
+}
