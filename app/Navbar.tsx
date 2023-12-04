@@ -140,7 +140,10 @@ const MobileNavLinks = () => {
         anchor='left'
         open={open}
         onClose={handleClose}
-        sx={{ zIndex: theme => theme.zIndex.drawer + 2 }}
+        sx={{
+          zIndex: theme => theme.zIndex.drawer + 2,
+          width: 250,
+        }}
       >
         <AppBar
           position='relative'
