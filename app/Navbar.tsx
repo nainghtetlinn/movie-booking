@@ -2,6 +2,7 @@
 
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import LogoutIcon from '@mui/icons-material/Logout'
 import {
   AppBar,
@@ -32,7 +33,11 @@ import { Session } from 'next-auth'
 
 const Navbar = () => {
   const { status, data } = useSession()
+  const currentRoute = usePathname()
+
   const role = data?.user.role || 'USER'
+
+  if (role !== 'USER' && currentRoute === '/dashboard') return null
 
   return (
     <AppBar
@@ -40,6 +45,7 @@ const Navbar = () => {
       color={role !== 'USER' ? 'primary' : 'transparent'}
       variant='outlined'
       elevation={0}
+      sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}
     >
       <Toolbar>
         <Container disableGutters maxWidth='lg'>
@@ -53,10 +59,13 @@ const Navbar = () => {
               <Typography variant='h6' className='mr-2'>
                 Movie booking
               </Typography>
-              <LaptopNavLinks isAdmin={role !== 'USER'} />
+              <LaptopNavLinks
+                isAdmin={role !== 'USER'}
+                currentRoute={currentRoute}
+              />
             </Stack>
 
-            <AuthStatus status={status} data={data} />
+            <AuthStatus status={status} data={data} isAdmin={role !== 'USER'} />
           </Stack>
         </Container>
       </Toolbar>
@@ -64,9 +73,14 @@ const Navbar = () => {
   )
 }
 
-const LaptopNavLinks = ({ isAdmin }: { isAdmin: boolean }) => {
+const LaptopNavLinks = ({
+  isAdmin,
+  currentRoute,
+}: {
+  isAdmin: boolean
+  currentRoute: string
+}) => {
   const router = useRouter()
-  const currentRoute = usePathname()
 
   return (
     <Stack
@@ -122,7 +136,12 @@ const MobileNavLinks = () => {
       >
         <MenuIcon />
       </IconButton>
-      <Drawer anchor='left' open={open} onClose={handleClose}>
+      <Drawer
+        anchor='left'
+        open={open}
+        onClose={handleClose}
+        sx={{ zIndex: theme => theme.zIndex.drawer + 2 }}
+      >
         <AppBar
           position='relative'
           color='transparent'
@@ -164,9 +183,11 @@ const navlinks = [
 const AuthStatus = ({
   status,
   data,
+  isAdmin,
 }: {
   status: 'loading' | 'authenticated' | 'unauthenticated'
   data: Session | null
+  isAdmin: boolean
 }) => {
   const router = useRouter()
 
@@ -232,6 +253,15 @@ const AuthStatus = ({
                 secondary={data?.user.name}
               />
             </ListItem>
+
+            {isAdmin && (
+              <MenuItem onClick={() => router.push('/dashboard')}>
+                <ListItemIcon>
+                  <AdminPanelSettingsIcon />
+                </ListItemIcon>
+                Admin Dashboard
+              </MenuItem>
+            )}
             <MenuItem onClick={() => signOut()}>
               <ListItemIcon>
                 <LogoutIcon />
