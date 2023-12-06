@@ -38,7 +38,7 @@ const Navbar = () => {
   const role = data?.user.role || 'USER'
   const isAdmin = role !== 'USER'
 
-  if (currentRoute === '/dashboard') return null
+  if (currentRoute.startsWith('/dashboard')) return null
 
   return (
     <AppBar
