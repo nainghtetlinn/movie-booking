@@ -24,11 +24,12 @@ import {
   Stack,
   Skeleton,
   Avatar,
+  Button,
 } from '@mui/material'
 
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 
 const drawerWidth = 250
 
@@ -177,18 +178,30 @@ const Profile = () => {
 
   return (
     <>
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar
-            className='w-8 h-8'
-            src={data?.user.image || ''}
-            alt={data?.user.name || ''}
+      <Box>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar
+              className='w-8 h-8'
+              src={data?.user.image || ''}
+              alt={data?.user.name || ''}
+            >
+              {data?.user.name ? data.user.name[0].toUpperCase() : '?'}
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={data?.user.name} secondary={data?.user.role} />
+        </ListItem>
+        <Box sx={{ mx: 2, mb: 2 }}>
+          <Button
+            onClick={() => signOut()}
+            variant='contained'
+            color='primary'
+            fullWidth
           >
-            {data?.user.name ? data.user.name[0].toUpperCase() : '?'}
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary={data?.user.name} secondary={data?.user.role} />
-      </ListItem>
+            Logout
+          </Button>
+        </Box>
+      </Box>
     </>
   )
 }
