@@ -16,11 +16,14 @@ import {
   Box,
   Drawer,
   List,
+  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  ListItemAvatar,
   Stack,
   Skeleton,
+  Avatar,
 } from '@mui/material'
 
 import { useRouter } from 'next/navigation'
@@ -174,7 +177,18 @@ const Profile = () => {
 
   return (
     <>
-      <div>Profile</div>
+      <ListItem>
+        <ListItemAvatar>
+          <Avatar
+            className='w-8 h-8'
+            src={data?.user.image || ''}
+            alt={data?.user.name || ''}
+          >
+            {data?.user.name ? data.user.name[0].toUpperCase() : '?'}
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary={data?.user.name} secondary={data?.user.role} />
+      </ListItem>
     </>
   )
 }
