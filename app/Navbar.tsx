@@ -57,7 +57,7 @@ const Navbar = () => {
           >
             <Stack direction='row' alignItems='center'>
               <MobileNavLinks />
-              <Typography variant='h6' className='mr-2'>
+              <Typography variant='h6' sx={{ mr: 1 }}>
                 Movie booking
               </Typography>
               <LaptopNavLinks isAdmin={isAdmin} currentRoute={currentRoute} />
