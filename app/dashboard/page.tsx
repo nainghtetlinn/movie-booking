@@ -1,51 +1,20 @@
-'use client'
-
-import { Drawer } from '@mui/material'
-import Sidebar from './Sidebar'
-import { useState } from 'react'
-
-const drawerWidth = 250
-
 const DashboardPage = () => {
-  const [mobileOpen, setMobileOpen] = useState(false)
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
-  }
-
   return (
-    <div className='flex'>
-      <Drawer
-        variant='temporary'
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-        sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-        }}
-      >
-        <Sidebar />
-      </Drawer>
-      <Drawer
-        open
-        variant='permanent'
-        sx={{
-          display: { xs: 'none', md: 'block' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-        }}
-      >
-        <Sidebar />
-      </Drawer>
-      <div>
-        <h1>DashboardPage</h1>
-        <div className='ml-20'>
-          <button onClick={handleDrawerToggle}>Click</button>
-        </div>
-      </div>
-    </div>
+    <>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit amet,
+        nulla esse magni officia ratione quos, expedita, sequi nostrum a
+        aliquid! Officia eum aut eveniet, excepturi quae, at, neque dolor error
+        quis officiis atque! Omnis illo dolorem fuga placeat accusantium hic
+        voluptate similique corporis recusandae praesentium suscipit unde harum
+        labore dolor id, a fugiat. Ut delectus sunt quisquam minus eius atque
+        consequatur doloribus quaerat consequuntur mollitia, tempora laborum
+        animi aperiam. Ipsum, pariatur repellendus. Doloremque blanditiis dicta
+        dignissimos illo porro facere perferendis recusandae excepturi expedita
+        odio minima ullam, quasi aliquam eaque magnam animi, aspernatur
+        repellendus modi incidunt reprehenderit? Vel, tempore dolor.
+      </p>
+    </>
   )
 }
 
