@@ -72,7 +72,7 @@ const Form = () => {
           />
           <div className='flex items-center justify-between mt-4'>
             <Link href='/register' component={NextLink}>
-              Don't have an account?
+              Don&apos;t have an account?
             </Link>
             <Button type='submit' variant='contained'>
               Login
