@@ -93,11 +93,11 @@ model Movie {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   description  String?
-  poster_url   String
-  director     String?
-  actors       String[]
   duration_min Int
   release_date DateTime
-  genres       String[]
+  poster_url   String
+  director     String?
+  actors       String?
+  genres       String?
   show         Show[]
 }
