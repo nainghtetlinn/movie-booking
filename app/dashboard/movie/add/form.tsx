@@ -1,15 +1,23 @@
 'use client'
 
-import { TextField, Card, CardContent, Box, Button } from '@mui/material'
+import {
+  TextField,
+  Card,
+  CardContent,
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+} from '@mui/material'
 import DatePicker from 'react-datepicker'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { newMovieSchema, NewMovieType } from '@/validations/movieValidation'
 
 const Form = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date())
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
@@ -95,10 +103,22 @@ const Form = () => {
             error={!!errors.genres?.message}
           />
 
-          <DatePicker
-            selected={startDate}
-            onChange={date => setStartDate(date)}
-          />
+          <FormControl>
+            <Controller
+              control={control}
+              name='release_date'
+              render={({ field }) => (
+                <DatePicker
+                  placeholderText='Select date'
+                  onChange={date => field.onChange(date)}
+                  selected={field.value}
+                />
+              )}
+            />
+            <FormHelperText error={!!errors.release_date?.message}>
+              {errors.release_date?.message}
+            </FormHelperText>
+          </FormControl>
 
           <div className='flex items-center justify-end mt-4'>
             <Button type='submit' variant='contained'>
