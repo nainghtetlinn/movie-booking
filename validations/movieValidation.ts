@@ -8,7 +8,7 @@ export const newMovieSchema = z.object({
   actors: z.string(),
   duration_min: z.number().min(1, 'Duration required.'),
   release_date: z.string().datetime(),
-  genres: z.array(z.string()),
+  genres: z.string(),
 })
 
 export type NewMovieType = z.infer<typeof newMovieSchema>
