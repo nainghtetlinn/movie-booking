@@ -11,6 +11,8 @@ import {
   FormHelperText,
 } from '@mui/material'
 import DatePicker from 'react-datepicker'
+import axios, { isAxiosError } from 'axios'
+import { enqueueSnackbar } from 'notistack'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { newMovieSchema, NewMovieType } from '@/validations/movieValidation'
@@ -24,7 +26,17 @@ const Form = () => {
   } = useForm<NewMovieType>({ resolver: zodResolver(newMovieSchema) })
 
   const onSubmit = async (e: any) => {
-    console.log(e)
+    try {
+      const { data } = await axios.post('/api/movie', { ...e })
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.log(error.response?.data)
+        enqueueSnackbar(
+          error.response?.data.message || 'Something went wrong.',
+          { variant: 'error' }
+        )
+      }
+    }
   }
 
   return (
