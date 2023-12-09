@@ -6,8 +6,8 @@ export const newMovieSchema = z.object({
   poster_url: z.string().min(1, 'Poster url required.'),
   director: z.string(),
   actors: z.string(),
-  duration_min: z.number().min(1, 'Duration required.'),
-  release_date: z.string().datetime(),
+  duration_min: z.coerce.number().min(1, 'Duration required.'),
+  release_date: z.date(),
   genres: z.string(),
 })
 
