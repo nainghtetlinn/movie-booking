@@ -10,3 +10,5 @@ export const newMovieSchema = z.object({
   release_date: z.string().datetime(),
   genres: z.array(z.string()),
 })
+
+export type NewMovieType = z.infer<typeof newMovieSchema>
