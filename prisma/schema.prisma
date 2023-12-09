@@ -98,14 +98,6 @@ model Movie {
   actors       String[]
   duration_min Int
   release_date DateTime
-  genreIds     String[] @db.ObjectId
-  genres       Genre[]  @relation(fields: [genreIds], references: [id])
+  genres       String[]
   show         Show[]
-}
-
-model Genre {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  movieIds String[] @db.ObjectId
-  movies   Movie[]  @relation(fields: [movieIds], references: [id])
 }
