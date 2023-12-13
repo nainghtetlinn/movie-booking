@@ -11,8 +11,20 @@ import {
   ListItemText,
 } from '@mui/material'
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
+import axios, { isAxiosError } from 'axios'
 
 const MovieMenu = ({ id }: { id: string }) => {
+  const handleDelete = async () => {
+    try {
+      const { data } = await axios.delete('/api/movie/' + id)
+      console.log(data)
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.log(error.response?.data)
+      }
+    }
+  }
+
   return (
     <PopupState variant='popover'>
       {popupState => (
@@ -25,13 +37,13 @@ const MovieMenu = ({ id }: { id: string }) => {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             {...bindMenu(popupState)}
           >
-            <MenuItem>
+            <MenuItem onClick={() => console.log(id)}>
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>
               <ListItemText>Edit</ListItemText>
             </MenuItem>
-            <MenuItem onClick={() => console.log(id)}>
+            <MenuItem onClick={handleDelete}>
               <ListItemIcon>
                 <DeleteIcon />
               </ListItemIcon>

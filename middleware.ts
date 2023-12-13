@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server'
 export default withAuth(
   (req: NextRequestWithAuth) => {
     const token = req.nextauth.token
-    console.log(token)
     const pathname = req.nextUrl.pathname
 
     if (
