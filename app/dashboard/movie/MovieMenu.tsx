@@ -1,23 +1,28 @@
 'use client'
 
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 import {
   IconButton,
-  Menu,
-  MenuItem,
   ListItemIcon,
   ListItemText,
+  Menu,
+  MenuItem,
 } from '@mui/material'
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
 import axios, { isAxiosError } from 'axios'
+import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state'
+import { useRouter } from 'next/navigation'
 
 const MovieMenu = ({ id }: { id: string }) => {
+  const router = useRouter()
+
   const handleDelete = async () => {
     try {
       const { data } = await axios.delete('/api/movie/' + id)
-      console.log(data)
+      if (data.success) {
+        router.refresh()
+      }
     } catch (error) {
       if (isAxiosError(error)) {
         console.log(error.response?.data)

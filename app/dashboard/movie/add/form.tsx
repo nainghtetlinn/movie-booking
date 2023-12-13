@@ -1,23 +1,25 @@
 'use client'
 
+import { NewMovieType, newMovieSchema } from '@/validations/movieValidation'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  TextField,
-  Card,
-  CardContent,
   Box,
   Button,
+  Card,
+  CardContent,
   FormControl,
-  InputLabel,
   FormHelperText,
+  TextField,
 } from '@mui/material'
-import DatePicker from 'react-datepicker'
 import axios, { isAxiosError } from 'axios'
+import { useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
-import { useForm, Controller } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { newMovieSchema, NewMovieType } from '@/validations/movieValidation'
+import DatePicker from 'react-datepicker'
+import { Controller, useForm } from 'react-hook-form'
 
 const Form = () => {
+  const router = useRouter()
+
   const {
     control,
     register,
@@ -28,6 +30,10 @@ const Form = () => {
   const onSubmit = async (e: any) => {
     try {
       const { data } = await axios.post('/api/movie', { ...e })
+      if (data.success) {
+        router.push('/dashboard/movie')
+        router.refresh()
+      }
     } catch (error) {
       if (isAxiosError(error)) {
         console.log(error.response?.data)
