@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { newMovieSchema } from '@/validations/movieValidation'
+import { MovieInputSchema } from '@/validations/movieValidation'
 import response from '@/utils/response'
 import prisma from '@/prisma/prismaClient'
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
 
-  const validation = newMovieSchema.safeParse(body)
+  const validation = MovieInputSchema.safeParse(body)
 
   if (!validation.success)
     return NextResponse.json(
