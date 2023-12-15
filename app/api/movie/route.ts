@@ -20,8 +20,3 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json(response.success(newMovie), { status: 201 })
 }
-
-export async function GET(req: NextRequest) {
-  const movies = await prisma.movie.findMany()
-  return NextResponse.json(response.success(movies), { status: 200 })
-}
