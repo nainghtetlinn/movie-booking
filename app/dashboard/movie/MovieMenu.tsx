@@ -30,6 +30,10 @@ const MovieMenu = ({ id }: { id: string }) => {
     }
   }
 
+  const handleEdit = () => {
+    router.push('/dashboard/movie/edit/' + id)
+  }
+
   return (
     <PopupState variant='popover'>
       {popupState => (
@@ -42,7 +46,7 @@ const MovieMenu = ({ id }: { id: string }) => {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             {...bindMenu(popupState)}
           >
-            <MenuItem onClick={() => console.log(id)}>
+            <MenuItem onClick={handleEdit}>
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>
