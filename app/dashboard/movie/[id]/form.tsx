@@ -5,7 +5,7 @@ import { Movie } from '@prisma/client'
 import axios, { isAxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
-import MovieForm from '../../MovieForm'
+import MovieForm from '../MovieForm'
 
 const Form = ({ movie }: { movie: Movie | null }) => {
   const router = useRouter()

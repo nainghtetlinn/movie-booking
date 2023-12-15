@@ -31,7 +31,7 @@ const MovieMenu = ({ id }: { id: string }) => {
   }
 
   const handleEdit = () => {
-    router.push('/dashboard/movie/edit/' + id)
+    router.push('/dashboard/movie/' + id)
   }
 
   return (
