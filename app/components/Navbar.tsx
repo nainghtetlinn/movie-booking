@@ -1,35 +1,35 @@
 'use client'
 
-import MenuIcon from '@mui/icons-material/Menu'
-import CloseIcon from '@mui/icons-material/Close'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
+import CloseIcon from '@mui/icons-material/Close'
 import LogoutIcon from '@mui/icons-material/Logout'
+import MenuIcon from '@mui/icons-material/Menu'
 import {
   AppBar,
-  Toolbar,
-  Container,
-  Stack,
-  Typography,
-  IconButton,
+  Avatar,
   Button,
+  Container,
+  Drawer,
+  IconButton,
   List,
   ListItem,
-  ListItemText,
+  ListItemAvatar,
   ListItemButton,
   ListItemIcon,
-  ListItemAvatar,
-  Drawer,
-  Skeleton,
-  Tooltip,
-  Avatar,
+  ListItemText,
   Menu,
   MenuItem,
+  Skeleton,
+  Stack,
+  Toolbar,
+  Tooltip,
+  Typography,
 } from '@mui/material'
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
-import { useRouter, usePathname } from 'next/navigation'
-import { useState } from 'react'
-import { useSession, signOut } from 'next-auth/react'
+import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state'
 import { Session } from 'next-auth'
+import { signOut, useSession } from 'next-auth/react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 const Navbar = () => {
   const { status, data } = useSession()
@@ -37,8 +37,6 @@ const Navbar = () => {
 
   const role = data?.user.role || 'USER'
   const isAdmin = role !== 'USER'
-
-  if (currentRoute.startsWith('/dashboard')) return null
 
   return (
     <AppBar

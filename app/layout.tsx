@@ -5,7 +5,6 @@ import './globals.css'
 import AuthProvider from '@/providers/authProvider'
 import ThemeProvider from '@/providers/themeProvider'
 import SnackbarProvider from '@/providers/snackbarProvider'
-import Navbar from './Navbar'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,10 +21,7 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <ThemeProvider>
-            <SnackbarProvider>
-              <Navbar />
-              <main>{children}</main>
-            </SnackbarProvider>
+            <SnackbarProvider>{children}</SnackbarProvider>
           </ThemeProvider>
         </AuthProvider>
       </body>
