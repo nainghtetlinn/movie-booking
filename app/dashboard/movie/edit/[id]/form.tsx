@@ -1,17 +1,18 @@
 'use client'
 
 import { TMovie } from '@/validations/movieValidation'
+import { Movie } from '@prisma/client'
 import axios, { isAxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
-import MovieForm from '../MovieForm'
+import MovieForm from '../../MovieForm'
 
-const Form = () => {
+const Form = ({ movie }: { movie: Movie | null }) => {
   const router = useRouter()
 
-  const handleCreate = async (e: TMovie) => {
+  const handleEdit = async (e: TMovie) => {
     try {
-      const { data } = await axios.post('/api/movie', { ...e })
+      const { data } = await axios.post(`/api/movie/${movie?.id}`, { ...e })
       if (data.success) {
         router.push('/dashboard/movie')
         router.refresh()
@@ -27,7 +28,13 @@ const Form = () => {
     }
   }
 
-  return <MovieForm onSubmit={handleCreate} buttonLabel='Create' />
+  return (
+    <MovieForm
+      onSubmit={handleEdit}
+      buttonLabel='Update'
+      defaultValues={movie}
+    />
+  )
 }
 
 export default Form
