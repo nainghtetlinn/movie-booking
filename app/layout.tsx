@@ -5,6 +5,7 @@ import './globals.css'
 import AuthProvider from '@/providers/authProvider'
 import ThemeProvider from '@/providers/themeProvider'
 import SnackbarProvider from '@/providers/snackbarProvider'
+import LocalizationProvider from '@/providers/localizationProvider'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -21,7 +22,11 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <ThemeProvider>
-            <SnackbarProvider>{children}</SnackbarProvider>
+            <LocalizationProvider>
+              <SnackbarProvider>
+                <>{children}</>
+              </SnackbarProvider>
+            </LocalizationProvider>
           </ThemeProvider>
         </AuthProvider>
       </body>
