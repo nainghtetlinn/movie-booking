@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { MovieInputSchema } from '@/validations/movieValidation'
-import response from '@/utils/response'
 import prisma from '@/prisma/prismaClient'
+import response from '@/utils/response'
+import { MovieInputSchema } from '@/validations/movieValidation'
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
