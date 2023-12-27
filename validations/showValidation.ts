@@ -10,6 +10,6 @@ export const ShowInputSchema = z.object({
         const totalStart = start_time.getTime()
         const totalEnd = end_time.getTime()
         return totalEnd > totalStart
-    }, { message: "Invalid inputs." })
+    }, { message: "Invalid inputs.", path: ['end_time'] })
 
 export type TShow = z.infer<typeof ShowInputSchema>

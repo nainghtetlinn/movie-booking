@@ -75,6 +75,25 @@ const ShowForm = ({
             )}
           />
 
+          <Controller
+            name='date'
+            control={control}
+            render={({ field }) => (
+              <MobileDatePicker
+                label='Date'
+                slotProps={{
+                  textField: {
+                    margin: 'dense',
+                    fullWidth: true,
+                  },
+                }}
+                value={moment(field.value)}
+                inputRef={field.ref}
+                onChange={date => field.onChange(date)}
+              />
+            )}
+          />
+
           <Stack direction='row' gap={1}>
             <Controller
               name='start_time'
@@ -105,6 +124,8 @@ const ShowForm = ({
                     textField: {
                       margin: 'dense',
                       fullWidth: true,
+                      helperText: errors.end_time?.message || null,
+                      error: !!errors.end_time?.message,
                     },
                   }}
                   value={moment(field.value)}
@@ -114,25 +135,6 @@ const ShowForm = ({
               )}
             />
           </Stack>
-
-          <Controller
-            name='date'
-            control={control}
-            render={({ field }) => (
-              <MobileDatePicker
-                label='Date'
-                slotProps={{
-                  textField: {
-                    margin: 'dense',
-                    fullWidth: true,
-                  },
-                }}
-                value={moment(field.value)}
-                inputRef={field.ref}
-                onChange={date => field.onChange(date)}
-              />
-            )}
-          />
 
           <div className='flex items-center justify-end mt-4'>
             <Button type='submit' variant='contained'>
