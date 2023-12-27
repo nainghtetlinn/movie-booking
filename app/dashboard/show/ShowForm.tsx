@@ -20,10 +20,12 @@ const ShowForm = ({
   buttonLabel = 'Submit',
   movies,
   onSubmit,
+  defaultValues,
 }: {
   buttonLabel?: string
   movies: { id: string; title: string }[]
   onSubmit: (e: TShow) => void
+  defaultValues?: TShow | null
 }) => {
   const {
     control,
@@ -31,18 +33,13 @@ const ShowForm = ({
     formState: { errors },
   } = useForm<TShow>({
     resolver: zodResolver(ShowInputSchema),
-    defaultValues: {
-      date: new Date(),
-      start_time: new Date(),
-      end_time: new Date(),
-      movieId: '',
-    },
+    defaultValues: defaultValues || {},
   })
 
   const [selectedMovie, setSelectedMovie] = useState<{
     id: string
     title: string
-  } | null>(null)
+  } | null>(movies.find(m => m.id == defaultValues?.movieId) || null)
 
   return (
     <Card sx={{ maxWidth: 400 }}>
