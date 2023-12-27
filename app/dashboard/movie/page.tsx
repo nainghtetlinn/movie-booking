@@ -1,9 +1,8 @@
-import AddIcon from '@mui/icons-material/Add'
-import { Typography, Fab } from '@mui/material'
-import MoviesTable from './MoviesTable'
-
-import Link from 'next/link'
 import prisma from '@/prisma/prismaClient'
+import AddIcon from '@mui/icons-material/Add'
+import { Fab, Typography } from '@mui/material'
+import Link from 'next/link'
+import MoviesTable from './MoviesTable'
 
 const DashboardMoviePage = async () => {
   const movies = await prisma.movie.findMany()
