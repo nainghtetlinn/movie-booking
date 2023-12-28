@@ -4,6 +4,7 @@ import { ShowInputSchema } from '@/validations/showValidation'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { options } from '../../auth/[...nextauth]/options'
+import { checkIsAdmin } from '@/utils/admin'
 
 export async function DELETE(
     req: NextRequest,
@@ -11,8 +12,7 @@ export async function DELETE(
 ) {
     const id = params.id
     const session = await getServerSession(options)
-    const isAdmin =
-        session?.user.role === 'ADMIN' || session?.user.role === 'SUPER_ADMIN'
+    const isAdmin = checkIsAdmin(session?.user.role || 'USER')
 
     if (isAdmin) {
         const foundShow = await prisma.show.findUnique({ where: { id } })
@@ -35,20 +35,20 @@ export async function POST(
 ) {
     const id = params.id
     const session = await getServerSession(options)
-    const isAdmin =
-        session?.user.role === 'ADMIN' || session?.user.role === 'SUPER_ADMIN'
+    const isAdmin = checkIsAdmin(session?.user.role || 'USER')
 
-    const body = await req.json()
-
-    const validation = ShowInputSchema.safeParse(body)
-
-    if (!validation.success)
-        return NextResponse.json(
-            response.error('Invalid inputs.', validation.error.format()),
-            { status: 400 }
-        )
 
     if (isAdmin) {
+        const body = await req.json()
+
+        const validation = ShowInputSchema.safeParse(body)
+
+        if (!validation.success)
+            return NextResponse.json(
+                response.error('Invalid inputs.', validation.error.format()),
+                { status: 400 }
+            )
+
         const foundShow = await prisma.show.findUnique({ where: { id } })
         if (!foundShow) {
             return NextResponse.json(response.error('Show not found.'), {
