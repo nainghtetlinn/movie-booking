@@ -1,20 +1,24 @@
+import prisma from '@/prisma/prismaClient'
 import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
   TableContainer,
   TableHead,
-  TableBody,
   TableRow,
-  TableCell,
-  Table,
-  Paper,
 } from '@mui/material'
-import ShowMenu from './ShowMenu'
 import moment from 'moment'
 import Image from 'next/image'
-import { Prisma } from '@prisma/client'
+import ShowMenu from './ShowMenu'
 
-type Show = Prisma.ShowGetPayload<{ include: { movie: true } }>
+const ShowsTable = async () => {
+  const shows = await prisma.show.findMany({
+    include: {
+      movie: true,
+    },
+  })
 
-const ShowsTable = ({ shows }: { shows: Show[] }) => {
   return (
     <TableContainer component={Paper}>
       <Table>

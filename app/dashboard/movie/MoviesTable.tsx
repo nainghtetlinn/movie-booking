@@ -1,18 +1,20 @@
+import prisma from '@/prisma/prismaClient'
 import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
   TableContainer,
   TableHead,
-  TableBody,
   TableRow,
-  TableCell,
-  Table,
-  Paper,
 } from '@mui/material'
-import MovieMenu from './MovieMenu'
 import moment from 'moment'
 import Image from 'next/image'
-import { Movie } from '@prisma/client'
+import MovieMenu from './MovieMenu'
 
-const MoviesTable = ({ movies }: { movies: Movie[] }) => {
+const MoviesTable = async () => {
+  const movies = await prisma.movie.findMany()
+
   return (
     <TableContainer component={Paper}>
       <Table>
