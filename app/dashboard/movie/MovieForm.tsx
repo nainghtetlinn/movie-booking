@@ -2,16 +2,9 @@
 
 import { MovieInputSchema, TMovie } from '@/validations/movieValidation'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  FormControl,
-  FormHelperText,
-  TextField,
-} from '@mui/material'
-import DatePicker from 'react-datepicker'
+import { Box, Button, Card, CardContent, TextField } from '@mui/material'
+import { MobileDatePicker } from '@mui/x-date-pickers'
+import moment from 'moment'
 import { Controller, useForm } from 'react-hook-form'
 
 const MovieForm = ({
@@ -40,9 +33,6 @@ const MovieForm = ({
           <TextField
             {...register('title')}
             label='Title'
-            fullWidth
-            size='small'
-            margin='dense'
             helperText={errors.title?.message}
             error={!!errors.title?.message}
           />
@@ -51,10 +41,7 @@ const MovieForm = ({
             {...register('description')}
             label='Description'
             multiline
-            fullWidth
             rows={3}
-            size='small'
-            margin='dense'
             helperText={errors.description?.message}
             error={!!errors.description?.message}
           />
@@ -62,9 +49,6 @@ const MovieForm = ({
           <TextField
             {...register('poster_url')}
             label='Poster'
-            fullWidth
-            size='small'
-            margin='dense'
             helperText={errors.poster_url?.message}
             error={!!errors.poster_url?.message}
           />
@@ -72,9 +56,6 @@ const MovieForm = ({
           <TextField
             {...register('director')}
             label='Director'
-            fullWidth
-            size='small'
-            margin='dense'
             helperText={errors.director?.message}
             error={!!errors.director?.message}
           />
@@ -82,9 +63,6 @@ const MovieForm = ({
           <TextField
             {...register('actors')}
             label='Actors'
-            fullWidth
-            size='small'
-            margin='dense'
             helperText={errors.actors?.message}
             error={!!errors.actors?.message}
           />
@@ -92,9 +70,6 @@ const MovieForm = ({
           <TextField
             {...register('duration_min')}
             label='Duration'
-            fullWidth
-            size='small'
-            margin='dense'
             helperText={errors.duration_min?.message}
             error={!!errors.duration_min?.message}
           />
@@ -102,29 +77,22 @@ const MovieForm = ({
           <TextField
             {...register('genres')}
             label='Genres'
-            fullWidth
-            size='small'
-            margin='dense'
             helperText={errors.genres?.message}
             error={!!errors.genres?.message}
           />
 
-          <FormControl>
-            <Controller
-              control={control}
-              name='release_date'
-              render={({ field }) => (
-                <DatePicker
-                  placeholderText='Select date'
-                  onChange={date => field.onChange(date)}
-                  selected={field.value}
-                />
-              )}
-            />
-            <FormHelperText error={!!errors.release_date?.message}>
-              {errors.release_date?.message}
-            </FormHelperText>
-          </FormControl>
+          <Controller
+            name='release_date'
+            control={control}
+            render={({ field }) => (
+              <MobileDatePicker
+                label='Date'
+                value={moment(field.value)}
+                inputRef={field.ref}
+                onChange={date => field.onChange(date)}
+              />
+            )}
+          />
 
           <div className='flex items-center justify-end mt-4'>
             <Button type='submit' variant='contained'>
