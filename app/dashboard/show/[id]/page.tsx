@@ -1,5 +1,6 @@
 import prisma from '@/prisma/prismaClient'
 import { Typography } from '@mui/material'
+import { redirect } from 'next/navigation'
 import Form from './form'
 
 const EditShowPage = async ({ params }: { params: { id: string } }) => {
@@ -7,6 +8,11 @@ const EditShowPage = async ({ params }: { params: { id: string } }) => {
   const movies = await prisma.movie.findMany({
     select: { id: true, title: true },
   })
+
+  if (!show) {
+    redirect('/dashboard/show')
+  }
+
   return (
     <div>
       <Typography variant='h4' sx={{ mb: 1 }}>
