@@ -36,6 +36,12 @@ const theme: Theme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      defaultProps: {
+        fullWidth: true,
+        margin: 'dense',
+      },
+    },
   },
 })
 
