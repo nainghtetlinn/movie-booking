@@ -38,7 +38,7 @@ const MoviesTable = ({ movies }: { movies: Movie[] }) => {
                 />
               </TableCell>
               <TableCell>{movie.title}</TableCell>
-              <TableCell>{moment(movie.release_date).format('LL')}</TableCell>
+              <TableCell>{moment(movie.release_date).format('L')}</TableCell>
               <TableCell>{movie.duration_min} mins</TableCell>
               <TableCell>{movie.genres}</TableCell>
               <TableCell>
