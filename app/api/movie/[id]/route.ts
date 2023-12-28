@@ -1,10 +1,10 @@
 import prisma from '@/prisma/prismaClient'
+import { checkIsAdmin } from '@/utils/admin'
 import response from '@/utils/response'
 import { MovieInputSchema } from '@/validations/movieValidation'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { options } from '../../auth/[...nextauth]/options'
-import { checkIsAdmin } from '@/utils/admin'
 
 export async function DELETE(
   req: NextRequest,
