@@ -1,3 +1,4 @@
+import { options } from '@/app/api/auth/[...nextauth]/options'
 import prisma from '@/prisma/prismaClient'
 import {
   Paper,
@@ -8,10 +9,12 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material'
+import { getServerSession } from 'next-auth'
 import UserMenu from './UserMenu'
 
 const UsersTable = async () => {
   const users = await prisma.user.findMany()
+  const session = await getServerSession(options)
 
   return (
     <TableContainer component={Paper}>
@@ -22,7 +25,7 @@ const UsersTable = async () => {
             <TableCell>Email</TableCell>
             <TableCell>Phone no.</TableCell>
             <TableCell>Role</TableCell>
-            <TableCell></TableCell>
+            {session?.user.role === 'SUPER_ADMIN' && <TableCell></TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -32,9 +35,12 @@ const UsersTable = async () => {
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.phone_no}</TableCell>
               <TableCell>{user.role}</TableCell>
-              <TableCell>
-                <UserMenu id={user.id} />
-              </TableCell>
+              {session?.user.role === 'SUPER_ADMIN' &&
+                user.role !== 'SUPER_ADMIN' && (
+                  <TableCell>
+                    <UserMenu id={user.id} />
+                  </TableCell>
+                )}
             </TableRow>
           ))}
         </TableBody>

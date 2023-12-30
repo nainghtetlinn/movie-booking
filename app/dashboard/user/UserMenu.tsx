@@ -10,8 +10,17 @@ import { useRouter } from 'next/navigation'
 const UserMenu = ({ id }: { id: string }) => {
   const router = useRouter()
 
-  const handleChange = (role: Role) => {
-    console.log(role)
+  const handleChange = async (role: Role) => {
+    try {
+      const { data } = await axios.post('/api/user/' + id, { role })
+      if (data.success) {
+        router.refresh()
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.log(error.response?.data)
+      }
+    }
   }
 
   return (
@@ -38,6 +47,6 @@ const UserMenu = ({ id }: { id: string }) => {
   )
 }
 
-const roles: Role[] = ['USER', 'ADMIN', 'SUPER_ADMIN']
+const roles: Role[] = ['USER', 'ADMIN']
 
 export default UserMenu

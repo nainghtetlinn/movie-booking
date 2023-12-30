@@ -14,3 +14,7 @@ export const loginUserSchema = z.object({
   email: z.string().min(1, 'Email required.').email(),
   password: z.string().min(5, 'Password must be at least 5 characters.'),
 })
+
+export const promotionUserSchema = z.object({
+  role: z.enum(['USER', 'ADMIN'])
+})
