@@ -1,6 +1,6 @@
 'use client'
 
-import { MovieInputSchema, TMovie } from '@/validations/movieValidation'
+import { movieInputSchema, TMovie } from '@/validations/movieValidation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Button, Card, CardContent, TextField } from '@mui/material'
 import { MobileDatePicker } from '@mui/x-date-pickers'
@@ -22,7 +22,7 @@ const MovieForm = ({
     handleSubmit,
     formState: { errors },
   } = useForm<TMovie>({
-    resolver: zodResolver(MovieInputSchema),
+    resolver: zodResolver(movieInputSchema),
     defaultValues: defaultValues || {},
   })
 

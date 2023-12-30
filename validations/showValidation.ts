@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const ShowInputSchema = z.object({
+export const showInputSchema = z.object({
     start_time: z.coerce.date(),
     end_time: z.coerce.date(),
     date: z.coerce.date(),
@@ -12,4 +12,4 @@ export const ShowInputSchema = z.object({
         return totalEnd > totalStart
     }, { message: "Invalid inputs.", path: ['end_time'] })
 
-export type TShow = z.infer<typeof ShowInputSchema>
+export type TShow = z.infer<typeof showInputSchema>

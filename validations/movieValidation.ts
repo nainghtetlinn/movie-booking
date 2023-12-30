@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const MovieInputSchema = z.object({
+export const movieInputSchema = z.object({
   title: z.string().min(1, 'Title required.').max(255),
   description: z.string().optional().nullable(),
   poster_url: z.string(),
@@ -11,4 +11,4 @@ export const MovieInputSchema = z.object({
   genres: z.string().optional().nullable(),
 })
 
-export type TMovie = z.infer<typeof MovieInputSchema>
+export type TMovie = z.infer<typeof movieInputSchema>

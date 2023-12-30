@@ -1,6 +1,6 @@
 'use client'
 
-import { ShowInputSchema, TShow } from '@/validations/showValidation'
+import { showInputSchema, TShow } from '@/validations/showValidation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Autocomplete,
@@ -32,7 +32,7 @@ const ShowForm = ({
     handleSubmit,
     formState: { errors },
   } = useForm<TShow>({
-    resolver: zodResolver(ShowInputSchema),
+    resolver: zodResolver(showInputSchema),
     defaultValues: defaultValues || {},
   })
 

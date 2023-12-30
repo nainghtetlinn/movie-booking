@@ -1,7 +1,7 @@
 import prisma from '@/prisma/prismaClient'
 import { checkIsAdmin } from '@/utils/admin'
 import response from '@/utils/response'
-import { MovieInputSchema } from '@/validations/movieValidation'
+import { movieInputSchema } from '@/validations/movieValidation'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { options } from '../../auth/[...nextauth]/options'
@@ -40,7 +40,7 @@ export async function POST(
   if (isAdmin) {
     const body = await req.json()
 
-    const validation = MovieInputSchema.safeParse(body)
+    const validation = movieInputSchema.safeParse(body)
 
     if (!validation.success)
       return NextResponse.json(

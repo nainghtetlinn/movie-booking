@@ -1,7 +1,7 @@
 import prisma from '@/prisma/prismaClient'
 import { checkIsAdmin } from '@/utils/admin'
 import response from '@/utils/response'
-import { ShowInputSchema } from '@/validations/showValidation'
+import { showInputSchema } from '@/validations/showValidation'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { options } from '../../auth/[...nextauth]/options'
@@ -41,7 +41,7 @@ export async function POST(
     if (isAdmin) {
         const body = await req.json()
 
-        const validation = ShowInputSchema.safeParse(body)
+        const validation = showInputSchema.safeParse(body)
 
         if (!validation.success)
             return NextResponse.json(
