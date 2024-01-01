@@ -13,7 +13,11 @@ import Image from 'next/image'
 import MovieMenu from './MovieMenu'
 
 const MoviesTable = async () => {
-  const movies = await prisma.movie.findMany()
+  const movies = await prisma.movie.findMany({
+    orderBy: {
+      release_date: 'asc',
+    },
+  })
 
   return (
     <TableContainer component={Paper}>
