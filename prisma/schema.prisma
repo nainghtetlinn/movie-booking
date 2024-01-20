@@ -71,19 +71,11 @@ enum SeatStatus {
   NOT_AVAILABLE
 }
 
-model SeatRow {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  seats Seat[]
-}
-
 model Seat {
   id     String     @id @default(auto()) @map("_id") @db.ObjectId
   price  Int
   status SeatStatus
-  number Int
-  rowId  String     @db.ObjectId
-  row    SeatRow    @relation(fields: [rowId], references: [id])
+  seatId String
 }
 
 model Show {
