@@ -8,12 +8,14 @@ import moment from 'moment'
 import { Controller, useForm } from 'react-hook-form'
 
 const MovieForm = ({
-  buttonLabel = 'Submit',
   onSubmit,
+  loading = false,
+  buttonLabel = 'Submit',
   defaultValues,
 }: {
-  buttonLabel?: string
   onSubmit: (e: TMovie) => void
+  loading?: boolean
+  buttonLabel?: string
   defaultValues?: TMovie | null
 }) => {
   const {
@@ -69,7 +71,7 @@ const MovieForm = ({
 
           <TextField
             {...register('duration_min')}
-            label='Duration'
+            label='Duration (min)'
             helperText={errors.duration_min?.message}
             error={!!errors.duration_min?.message}
           />
@@ -86,7 +88,7 @@ const MovieForm = ({
             control={control}
             render={({ field }) => (
               <MobileDatePicker
-                label='Date'
+                label='Release date'
                 value={moment(field.value)}
                 inputRef={field.ref}
                 onChange={date => field.onChange(date)}
@@ -95,7 +97,7 @@ const MovieForm = ({
           />
 
           <div className='flex items-center justify-end mt-4'>
-            <Button type='submit' variant='contained'>
+            <Button type='submit' disabled={loading} variant='contained'>
               {buttonLabel}
             </Button>
           </div>

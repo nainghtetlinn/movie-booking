@@ -7,6 +7,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material'
 import moment from 'moment'
 import Image from 'next/image'
@@ -18,6 +19,9 @@ const MoviesTable = async () => {
       release_date: 'asc',
     },
   })
+
+  if (movies.length == 0)
+    return <Typography variant="h6">There is no movie</Typography>
 
   return (
     <TableContainer component={Paper}>
@@ -44,7 +48,9 @@ const MoviesTable = async () => {
                 />
               </TableCell>
               <TableCell>{movie.title}</TableCell>
-              <TableCell>{moment(movie.release_date).format('L')}</TableCell>
+              <TableCell>
+                {moment(movie.release_date).format('DD/MM/YYYY')}
+              </TableCell>
               <TableCell>{movie.duration_min} mins</TableCell>
               <TableCell>{movie.genres}</TableCell>
               <TableCell>

@@ -7,6 +7,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material'
 import moment from 'moment'
 import Image from 'next/image'
@@ -18,6 +19,9 @@ const ShowsTable = async () => {
       movie: true,
     },
   })
+
+  if (shows.length == 0)
+    return <Typography variant="h6">There is no show</Typography>
 
   return (
     <TableContainer component={Paper}>
@@ -47,9 +51,9 @@ const ShowsTable = async () => {
                 )}
               </TableCell>
               <TableCell>{show.movie?.title}</TableCell>
-              <TableCell>{moment(show.date).format('L')}</TableCell>
-              <TableCell>{moment(show.start_time).format('LT')}</TableCell>
-              <TableCell>{moment(show.end_time).format('LT')}</TableCell>
+              <TableCell>{moment(show.date).format('DD/MM/YYYY')}</TableCell>
+              <TableCell>{moment(show.start_time).format('h:mm a')}</TableCell>
+              <TableCell>{moment(show.end_time).format('h:mm a')}</TableCell>
               <TableCell>{show.movie?.duration_min} mins</TableCell>
               <TableCell>
                 <ShowMenu id={show.id} />
